@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "IPBJiraSync",
   "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3ventic/IPBJiraSync.git"
+  },
   "author": {
     "name": "Werner",
     "email": "3ventic@gmail.com"
