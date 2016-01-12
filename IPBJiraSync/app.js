@@ -32,7 +32,7 @@ function updateForumTags(page)
                             }
                             
                             var status = issue.fields.status.name;
-                            if (topic.prefix.toLowerCase() !== status.toLowerCase())
+                            if (!topic.prefix || topic.prefix.toLowerCase() !== status.toLowerCase())
                             {
                                 var postData = {
                                     prefix: status
