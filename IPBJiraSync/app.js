@@ -18,7 +18,7 @@ function updateForumTags(page)
             for (var i = 0; i < data.results.length; ++i)
             {
                 var topic = data.results[i];
-                if (topic.prefix !== "done")
+                if (topic.prefix.toLowerCase() !== "done")
                 {
                     console.log(topic.prefix);
                     for (var j = 0; j < topic.tags.length; ++j)
@@ -31,7 +31,6 @@ function updateForumTags(page)
                                 return;
                             }
                             
-                            console.log(topic.firstPost.author);
                             if (config.ipbChangeAuthor && topic.firstPost.author.id !== config.ipbAuthorId)
                             {
                                 IPB.post('forums/posts' + topic.firstPost.id, {
@@ -47,31 +46,28 @@ function updateForumTags(page)
                                 });
                             }
                             
-                            var status = issue.fields.status.name.toLowerCase();
-                            if (topic.prefix !== status)
+                            var status = issue.fields.status.name;
+                            if (topic.prefix.toLowerCase() !== status.toLowerCase())
                             {
                                 var postData = {
                                     prefix: status
                                 }
                                 
                                 console.log(status);
-
-                                if (status === 'done')
+                                
+                                IPB.post('forums/posts', {
+                                    topic: topic.id,
+                                    author: config.ipbAuthorId,
+                                    post: config.ipbUpdatedPost.replace('%STATUS%', status),
+                                }, function postCB(err, data)
                                 {
-                                    IPB.post('forums/posts', {
-                                        topic: topic.id,
-                                        author: config.ipbAuthorId,
-                                        post: config.ipbCompletedMessage,
-                                    }, function postCB(err, data)
+                                    if (err)
                                     {
-                                        if (err)
-                                        {
-                                            console.log(err);
-                                            return;
-                                        }
-                                        console.log("Topic " + topic.id + " done");
-                                    });
-                                }
+                                        console.log(err);
+                                        return;
+                                    }
+                                    console.log("Topic " + topic.id + " posted to");
+                                });
                                 
                                 IPB.post('forums/topics/' + topic.id, postData, function updateCB(err, data)
                                 {
