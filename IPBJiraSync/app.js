@@ -31,26 +31,16 @@ function updateForumTags(page)
                                 return;
                             }
                             
-                            if (config.ipbChangeAuthor && topic.firstPost.author.id !== config.ipbAuthorId)
-                            {
-                                IPB.post('forums/posts/' + topic.firstPost.id, {
-                                    author: config.ipbAuthorId,
-                                }, function (err, data)
-                                {
-                                    if (err)
-                                    {
-                                        console.log(err);
-                                        return;
-                                    }
-                                    console.log("Updated post " + topic.firstPost.id);
-                                });
-                            }
-                            
                             var status = issue.fields.status.name;
                             if (topic.prefix.toLowerCase() !== status.toLowerCase())
                             {
                                 var postData = {
                                     prefix: status
+                                }
+
+                                if (config.ipbChangeAuthor && topic.firstPost.author.id !== config.ipbAuthorId)
+                                {
+                                    postData.author = config.ipbAuthorId;
                                 }
                                 
                                 console.log(status);
