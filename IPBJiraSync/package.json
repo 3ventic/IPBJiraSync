@@ -1,0 +1,14 @@
+{
+  "name": "IPBJiraSync",
+  "version": "0.1.0",
+  "description": "IPBJiraSync",
+  "main": "app.js",
+  "author": {
+    "name": "Werner",
+    "email": "3ventic@gmail.com"
+  },
+  "dependencies": {
+    "jira": "^0.9.2",
+    "node-ipb": "^0.1.2"
+  }
+}
