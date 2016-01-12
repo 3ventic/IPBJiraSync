@@ -18,7 +18,7 @@ function updateForumTags(page)
             for (var i = 0; i < data.results.length; ++i)
             {
                 var topic = data.results[i];
-                if (topic.prefix.toLowerCase() !== "done")
+                if (!topic.prefix || topic.prefix.toLowerCase() !== "done")
                 {
                     console.log(topic.prefix);
                     for (var j = 0; j < topic.tags.length; ++j)
