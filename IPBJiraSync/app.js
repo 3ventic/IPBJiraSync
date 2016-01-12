@@ -18,8 +18,9 @@ function updateForumTags(page)
             for (var i = 0; i < data.results.length; ++i)
             {
                 var topic = data.results[i];
-                if (data.prefix !== "done")
+                if (topic.prefix !== "done")
                 {
+                    console.log(topic.prefix);
                     for (var j = 0; j < topic.tags.length; ++j)
                     {
                         jira.findIssue(topic.tags[j].toUpperCase(), function jiraCB(error, issue)
@@ -29,19 +30,38 @@ function updateForumTags(page)
                                 console.log(error);
                                 return;
                             }
+                            
+                            console.log(topic.firstPost.author);
+                            if (config.ipbChangeAuthor && topic.firstPost.author.id !== config.ipbAuthorId)
+                            {
+                                IPB.post('forums/posts' + topic.firstPost.id, {
+                                    author: config.ipbAuthorId,
+                                }, function (err, data)
+                                {
+                                    if (err)
+                                    {
+                                        console.log(err);
+                                        return;
+                                    }
+                                    console.log("Updated post " + topic.firstPost.id);
+                                });
+                            }
+                            
                             var status = issue.fields.status.name.toLowerCase();
                             if (topic.prefix !== status)
                             {
                                 var postData = {
                                     prefix: status
                                 }
+                                
+                                console.log(status);
+
                                 if (status === 'done')
                                 {
                                     IPB.post('forums/posts', {
                                         topic: topic.id,
                                         author: config.ipbAuthorId,
                                         post: config.ipbCompletedMessage,
-                                        author_name: "JIRA"
                                     }, function postCB(err, data)
                                     {
                                         if (err)

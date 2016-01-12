@@ -9,5 +9,6 @@
     ipbForumId: "1,2", // Forum(s) to look for tags in
     ipbAuthorId: 1, // member ID of the user to post as
     ipbCompletedMessage: '', // message to post on completion
+    ipbChangeAuthor: false, // change original post author so they can no longer edit the topic
     updateIntervalMilliseconds: 600000
 };
