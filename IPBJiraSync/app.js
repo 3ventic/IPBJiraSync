@@ -33,7 +33,7 @@ function updateForumTags(page)
                             
                             if (config.ipbChangeAuthor && topic.firstPost.author.id !== config.ipbAuthorId)
                             {
-                                IPB.post('forums/posts' + topic.firstPost.id, {
+                                IPB.post('forums/posts/' + topic.firstPost.id, {
                                     author: config.ipbAuthorId,
                                 }, function (err, data)
                                 {
