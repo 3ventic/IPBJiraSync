@@ -18,11 +18,11 @@ function updateForumTags(page)
             for (var i = 0; i < data.results.length; ++i)
             {
                 var topic = data.results[i];
-                for (var j = 0; j < topic.tags.length; ++j)
+                if (data.prefix !== "done")
                 {
-                    if (data.prefix !== "done")
+                    for (var j = 0; j < topic.tags.length; ++j)
                     {
-                        jira.findIssue(topic.tags[i].toUpperCase(), function jiraCB(error, issue)
+                        jira.findIssue(topic.tags[j].toUpperCase(), function jiraCB(error, issue)
                         {
                             if (error)
                             {
